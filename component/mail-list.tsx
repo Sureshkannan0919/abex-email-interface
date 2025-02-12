@@ -1,5 +1,5 @@
 import { ComponentProps } from "react"
-import formatDistanceToNow from "date-fns/formatDistanceToNow"
+import { formatDistanceToNow } from "date-fns"
 
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -9,7 +9,7 @@ import { Mail } from "@/app/data"
 import { useMail } from "@/app/use-mail"
 
 interface MailListProps {
-  items: EmailsData['emails']
+  items: Mail[]
 }
 
 export function MailList({ items }: MailListProps) {

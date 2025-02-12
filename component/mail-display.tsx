@@ -1,7 +1,7 @@
-import addDays from "date-fns/addDays"
-import addHours from "date-fns/addHours"
-import format from "date-fns/format"
-import nextSaturday from "date-fns/nextSaturday"
+import { addDays } from "date-fns"
+import { addHours } from "date-fns"
+import { format } from "date-fns"
+import { nextSaturday } from "date-fns"
 import {
   Archive,
   ArchiveX,
@@ -206,7 +206,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                 <div className="font-semibold">{mail.from_name}</div>
                 <div className="line-clamp-1 text-xs">{mail.subject}</div>
                 <div className="line-clamp-1 text-xs">
-                  <span className="font-medium">Reply-To:</span> {mail.from_email}
+                  <span className="font-medium">Reply-To:</span> {mail.from}
                 </div>
               </div>
             </div>

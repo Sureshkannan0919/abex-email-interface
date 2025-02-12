@@ -16,7 +16,6 @@ import {
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Input } from "@/components/ui/input"
 import {
   ResizableHandle,
   ResizablePanel,
@@ -25,7 +24,6 @@ import {
 import { Separator } from "@/components/ui/separator"
 import {
   Tabs,
-  TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
@@ -36,9 +34,6 @@ import { MailList } from "@/component/mail-list"
 import { Nav } from "@/component/nav"
 import { type Mail } from "@/app/data"
 import { useMail } from "@/app/use-mail"
-import { EachMinuteOfIntervalOptions } from "date-fns"
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 
 interface MailProps {
@@ -47,7 +42,7 @@ interface MailProps {
     email: string
     icon: React.ReactNode
   }[]
-  mails: Email['emails']
+  mails: Mail[]
   defaultLayout: number[] | undefined
   defaultCollapsed?: boolean
   navCollapsedSize: number

@@ -2,7 +2,7 @@
 import { Mail } from "@/component/mail"
 import { accounts } from "@/app/data"
 import {  i, init } from "@instantdb/react";
-const APP_ID = "f775a7c3-3916-45c3-be96-a4b2db01e243"
+const APP_ID = "f775a7c3-3916-45c3-be96-a4b2db01e243";
 
 const schema = i.schema({
   entities: {

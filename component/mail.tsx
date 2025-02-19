@@ -36,6 +36,7 @@ import { type Mail } from "@/app/data"
 import { useMail } from "@/app/use-mail"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 
+
 interface MailProps {
   accounts: {
     label: string
@@ -59,7 +60,7 @@ export function Mail({
   const [mail] = useMail()
   const [filteredMails, setFilteredMails] = React.useState(mails)
   const handleSubjectChange = (value: string) => {
-    if (!value) {
+    if (!value || value === "None") {
       setFilteredMails(mails)
       return
     }
@@ -72,31 +73,14 @@ export function Mail({
     <TooltipProvider delayDuration={0}>
       <ResizablePanelGroup
         direction="horizontal"
-        onLayout={(sizes: number[]) => {
-          document.cookie = `react-resizable-panels:layout:mail=${JSON.stringify(
-            sizes
-          )}`
-        }}
-        className="h-full max-h-[800px] items-stretch"
+        className="h-full max-h-[600px] items-stretch"
       >
         <ResizablePanel
-          defaultSize={defaultLayout[0]}
-          collapsedSize={navCollapsedSize}
+          defaultSize={15}
+          collapsedSize={4}
           collapsible={true}
-          minSize={15}
+          minSize={10}
           maxSize={20}
-          onCollapse={() => {
-            setIsCollapsed(true)
-            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              true
-            )}`
-          }}
-          onResize={() => {
-            setIsCollapsed(false)
-            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              false
-            )}`
-          }}
           className={cn(
             isCollapsed &&
               "min-w-[50px] transition-all duration-300 ease-in-out"
@@ -190,7 +174,7 @@ export function Mail({
           />
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
+        <ResizablePanel defaultSize={defaultLayout[1]} minSize={35}>
           <Tabs defaultValue="all">
             <div className="flex items-center px-4 py-2">
               <h1 className="text-xl font-bold">Inbox</h1>
@@ -241,12 +225,18 @@ export function Mail({
 
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
+        <ResizablePanel 
+          defaultSize={50} 
+          minSize={30}
+          className="h-[calc(100vh-120px)] max-h-[800px] min-h-[400px]"
+        >
           <MailDisplay
             mail={mails.find((item) => item.id === mail.selected) || null}
+           
           />
         </ResizablePanel>
       </ResizablePanelGroup>
+
     </TooltipProvider>
   )
 }

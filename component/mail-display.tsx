@@ -43,13 +43,37 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Mail } from "@/app/data"
+import { generateEmailReply } from "@/component/gernerativeAi"
+import { useState } from "react"
+import { Input } from "@/components/ui/input"
 
 interface MailDisplayProps {
   mail: Mail | null
 }
 
+
 export function MailDisplay({ mail }: MailDisplayProps) {
   const today = new Date()
+  const [aiReply, setAiReply] = useState<string>("")
+  const [isGenerating, setIsGenerating] = useState(false)
+  const [customContent, setCustomContent] = useState("")
+  const [customCommand, setCustomCommand] = useState("")
+
+  const handleGenerateReply = async () => {
+    if (!mail) return;
+    
+    setIsGenerating(true);
+    try {
+      // Use custom content or fall back to snippet if text is not available
+      const content = customContent || mail.snippet;
+      const reply = await generateEmailReply(content, customCommand);
+      setAiReply(reply);
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   return (
     <div className="flex h-full flex-col">
@@ -177,7 +201,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" disabled={!mail}>
               <MoreVertical className="h-4 w-4" />
-              <span className="sr-only">More</span>
+              <span className="sr-only"></span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -253,6 +277,36 @@ export function MailDisplay({ mail }: MailDisplayProps) {
           No message selected
         </div>
       )}
+      <div className="p-4 border-t">
+        <div className="space-y-4 mb-4">
+          <Textarea
+            placeholder="Enter custom email content (optional)"
+            value={customContent}
+            onChange={(e) => setCustomContent(e.target.value)}
+            className="min-h-[100px]"
+          />
+          <Input
+            placeholder="Enter custom command (e.g., 'write a formal response', 'respond casually')"
+            value={customCommand}
+            onChange={(e) => setCustomCommand(e.target.value)}
+          />
+        </div>
+
+        <Button 
+          onClick={handleGenerateReply}
+          disabled={isGenerating || !mail}
+          className="mb-4"
+        >
+          {isGenerating ? "Generating Reply..." : "Generate AI Reply"}
+        </Button>
+        
+        {aiReply && (
+          <div className="mt-4 p-4 rounded-lg border bg-muted">
+            <h3 className="font-semibold mb-2">AI Generated Reply:</h3>
+            <div className="whitespace-pre-wrap">{aiReply}</div>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

@@ -4,7 +4,6 @@ import { formatDistanceToNow } from "date-fns"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Separator } from "@/components/ui/separator"
 import { Mail } from "@/app/data"
 import { useMail } from "@/app/use-mail"
 
@@ -23,7 +22,8 @@ export function MailList({ items }: MailListProps) {
             key={item.id}
             className={cn(
               "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
-              mail.selected === item.id && "bg-muted"
+              mail.selected === item.id && "bg-muted",
+              item.from_name === "HR Department" && "bg-gray-800 text-white"
             )}
             onClick={() =>
               setMail({

@@ -12,6 +12,7 @@ export type Mail = {
       snippet: string,
       subject: string,
       updated: Date,
+      text?: string
 }
 
 type Config = {

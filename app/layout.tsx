@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,10 +27,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        
-        {children}
-        
-      
+      <div className="container-wrapper h-screen max-h-[800px] min-h-[500px]">
+          <div className="h-[calc(100vh-2rem)] max-h-[750px] min-h-[450px]">
+            <div className="container py-4 pl-4 ml-4">
+              <section className="h-full overflow-hidden rounded-[0.5rem] border bg-background shadow">
+                {children}
+              </section>
+            </div>
+          </div>
+        </div>
         
       </body>
     </html>
